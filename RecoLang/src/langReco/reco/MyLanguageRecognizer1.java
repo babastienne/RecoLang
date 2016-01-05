@@ -7,16 +7,15 @@ import langModel.LanguageModel;
 import langModel.MyLaplaceLanguageModel;
 import langModel.MyNgramCounts;
 import langModel.NgramCounts;
-import langModel.NgramUtil;
 
 public class MyLanguageRecognizer1 extends LanguageRecognizer {
-
+	
 	public MyLanguageRecognizer1() {
 		super();
 		loadNgramCountPath4Lang("lm/fichConfig_bigram-100.txt");
 		recognizeSentenceLanguage("<s> futuro de los sistemas de seguridad social y de pensiones ( breve presentación ) </s>");
-
 	}
+	
 	@Override
 	public String recognizeSentenceLanguage(String sentence) {
 
