@@ -1,0 +1,2 @@
+<s> la phrase est la phrase est la phrase </s>
+<s> un arbre dans la plaine pousse avec amour </s>

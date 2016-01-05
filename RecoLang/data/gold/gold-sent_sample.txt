@@ -1,0 +1,4 @@
+<s> la phrase est la phrase est la phrase </s>
+<s> a tree full of love is growing up in the meadow </s>
+<s> un arbre dans la plaine pousse avec amour </s>
+<s> the phrase is at the est of the phrase in the phrase </s>
