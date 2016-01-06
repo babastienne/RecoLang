@@ -1,7 +1,6 @@
 package langReco.reco;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
 
 import langModel.LanguageModel;
 import langModel.MyLaplaceLanguageModel;
@@ -10,45 +9,43 @@ import langModel.NgramCounts;
 
 public class MyLanguageRecognizer1 extends LanguageRecognizer {
 	
-	public MyLanguageRecognizer1() {
+	public MyLanguageRecognizer1(String directoryToConfigurationFile) {
 		super();
-		loadNgramCountPath4Lang("lm/fichConfig_bigram-100.txt");
-		recognizeSentenceLanguage("<s> futuro de los sistemas de seguridad social y de pensiones ( breve presentación ) </s>");
+		super.loadNgramCountPath4Lang(directoryToConfigurationFile);
 	}
 	
 	@Override
 	public String recognizeSentenceLanguage(String sentence) {
-
-		Map<String,String> monMap = new HashMap<String, String>(); // nul
-		int order = 1;
-		Double proba = 0.0;
-		String name = "";
-		String mamerde = "";
-		NgramCounts montruc;
-		LanguageModel frllm;
 		
-		// Parcourir langNgramCountMap
-		for(String lang: langNgramCountMap.keySet()) {
+		LanguageModel frllm;
+		lang = new ArrayList<String>(getLanguages());
+		Double probab = 0.0;
+		String language="";
+//		for(String l : lang){
+//			System.out.println("l : " + l);
+//			for(String mllm : super.langNgramCountMap.get(l).values()){
+//				System.out.println("mllm : " + mllm);
+//			}
+//		}
+		
+		for(String l : lang){
 			
-			for(String idLM: langNgramCountMap.get(lang).keySet()) {
+			for(String mllm : super.langNgramCountMap.get(l).values()){
 				
-				montruc = new MyNgramCounts();
-				
-				montruc.scanTextFile(getNgramCountPath(lang, idLM), order);
-				
-				montruc.writeNgramCountFile(mamerde);
 				frllm = new MyLaplaceLanguageModel();
-				montruc.readNgramCountsFile(mamerde);
 				
-				if(frllm.getSentenceProb(sentence) > proba) {
-					proba = frllm.getSentenceProb(sentence);
-					name = lang;
+				NgramCounts test = new MyNgramCounts();
+				test.readNgramCountsFile(this.getNgramCountPath(l, l+"_bi"));
+				frllm.setNgramCounts(test);
+				
+				if(frllm.getSentenceProb(sentence) > probab) {
+					probab = frllm.getSentenceProb(sentence);
+					language = l;
 				}
-			}
-			
+			}	
 		}
 		
-		return name;
+		return language;
 		
 	}
 
