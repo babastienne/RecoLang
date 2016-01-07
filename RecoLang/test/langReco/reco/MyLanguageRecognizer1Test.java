@@ -6,7 +6,7 @@
  * @author Bastien POTIRON
  * @date 07/01/2016
  * @notes This test was test only once. Time for the run : ~ 40 minutes
- * 	Result of the run : System Performance = 
+ * 	Result of the run : System Performance = 0,452350
  */
 
 package langReco.reco;
