@@ -5,8 +5,13 @@
  *
  * @author Bastien POTIRON
  * @date 07/01/2016
- * @notes This test was test only once. Time for the run : ~ 40 minutes
- * 	Result of the run : System Performance = 0,452350
+ * @notes This test was test with different ngram. 
+ *  With bigram :	
+ * 		Time for the run : ~ 40 minutes
+ * 		Result of the run : System Performance = 0,452350
+ *  With trigram :
+ *  	Time for the run : ~    minutes
+ *  	Result of the run : System performance = 
  */
 
 package langReco.reco;
@@ -22,12 +27,12 @@ public class MyLanguageRecognizer1Test {
 
 	@Test
 	public void testBaselineLanguageRecognizer() {
-		String goldSent = "data/gold/gold-sent_sample.txt";
-		String goldLang = "data/gold/gold-lang_sample.txt";
+		String goldSent = "data/gold/gold-sent.txt";
+		String goldLang = "data/gold/gold-lang.txt";
 
-		MyLanguageRecognizer1 baseline = new MyLanguageRecognizer1("lm/fichConfig_bigram-100.txt");
+		MyLanguageRecognizer1 baseline = new MyLanguageRecognizer1("lm/fichConfig_trigram.txt");
 
-		String hypLangFilePath = "/tmp/hyphoteseseLanguageRecognizer1";
+		String hypLangFilePath = "tmp/hyphoteseseLanguageRecognizer1WithTrigram";
 		baseline.recognizeFileLanguage(goldSent, hypLangFilePath);
 		System.out.printf("System performance = %f\n", Performance.evaluate(goldLang, hypLangFilePath));
 	}

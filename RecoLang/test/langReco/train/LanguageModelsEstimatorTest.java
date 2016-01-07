@@ -1,15 +1,13 @@
 package langReco.train;
 
 
-import static org.junit.Assert.*;
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
-import langReco.eval.Performance;
-import langModel.LanguageModel;
-import langModel.MyLaplaceLanguageModel;
 import langModel.MyNgramCounts;
 import langModel.NgramCounts;
 
@@ -25,17 +23,37 @@ public class LanguageModelsEstimatorTest {
 	 * to create a language model with words from texts in English and order 3.
 	 */
 	@Test
-	public void testCreateLmWordLangDeOrder3() {
-		String trainDeFilePath = "data/train/train-de.txt";
-		
-		String lmDeFilePath = "lm/trigram-train-de.lm";
+	public void testCreateLmWordLangOrder3() {
+		ArrayList<String> lang = new ArrayList<String>();
 
-		int order = 3;
+			lang.add("de");
+			lang.add("es");
+			lang.add("et");
+			lang.add("hu");
+			lang.add("it");
+			lang.add("lv");
+			lang.add("nl");
+			lang.add("pl");
+			lang.add("pt");
+			lang.add("sv");
 		
-		// building a language model of order 3 on De data 
-		NgramCounts DeNgramCounts = new MyNgramCounts();
-		DeNgramCounts.scanTextFile(trainDeFilePath, order);
-		DeNgramCounts.writeNgramCountFile(lmDeFilePath);		
+		String trainFilePathShort = "data/train/train-"; 	// Chaine contenant la première partie du chemin vers le fichier
+		String lmFilePathShort = "lm/trigram-train-"; 		// Chaine contenant la première partie du chemin vers le fichier qui sera créé
+		int order = 3; // Le ngram créé sera d'ordre 3
+		NgramCounts NgramCounts;
+		String trainFilePathComplete, lmFilePathComplete;
+		
+		
+		for( String language : lang ) {
+			
+			trainFilePathComplete = trainFilePathShort + language + ".txt"; // A chaque iteration le début du chemin est le même, puis on ajoute le code de la langue et ".txt"
+			lmFilePathComplete = lmFilePathShort + language + ".lm";		// A chaque itération on complète le chemin du fichier créé
+			NgramCounts= new MyNgramCounts();
+			NgramCounts.scanTextFile(trainFilePathComplete, order);
+			NgramCounts.writeNgramCountFile(lmFilePathComplete);
+			
+		}		
+		
 	}
 
 

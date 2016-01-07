@@ -1,0 +1,10 @@
+de	de_bi	lm/trigram-train-de.lm
+es	es_bi	lm/trigram-train-es.lm
+et	et_bi	lm/trigram-train-et.lm
+hu	hu_bi	lm/trigram-train-hu.lm
+it	it_bi	lm/trigram-train-it.lm
+lv	lv_bi	lm/trigram-train-lv.lm
+nl	nl_bi	lm/trigram-train-nl.lm
+pl	pl_bi	lm/trigram-train-pl.lm
+pt	pt_bi	lm/trigram-train-pt.lm
+sv	sv_bi	lm/trigram-train-sv.lm
