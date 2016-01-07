@@ -10,13 +10,6 @@
 
 package langReco.reco;
 
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TestName;
-
-import langReco.eval.Performance;
-
 public class appli {
 	
 	/**
@@ -25,7 +18,7 @@ public class appli {
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		/*LanguageRecognizer premierEssai = new MyLanguageRecognizer1("lm/fichConfig_bigram-100.txt");
+		LanguageRecognizer premierEssai = new MyLanguageRecognizer1("lm/fichConfig_bigram-100.txt");
 		
 		String phraseADecoder = "<s> futuro de los sistemas de seguridad social y de pensiones ( breve presentaciÃ³n ) </s>";
 		String langue = premierEssai.recognizeSentenceLanguage(phraseADecoder);
@@ -45,30 +38,8 @@ public class appli {
 		
 		phraseADecoder = "<s> 3 . 2008. finanÅ¡u gada budÅ¾eta grozÄ«juma nr . 4 projekts ( </s>";
 		langue = premierEssai.recognizeSentenceLanguage(phraseADecoder);
-		System.out.println("\nPhrase : " + phraseADecoder + "\nLangue trouv�e : " + langue);*/
+		System.out.println("\nPhrase : " + phraseADecoder + "\nLangue trouv�e : " + langue);
 		
 	}
-	
-	@Test
-	public void testBaselineLanguageRecognizer() {
-		String goldSent = "data/gold/gold-sent.txt";
-		String goldLang = "data/gold/gold-lang.txt";
 
-		MyLanguageRecognizer1 baseline = new MyLanguageRecognizer1("lm/fichConfig_bigram-100.txt");
-
-		String hypLangFilePath = "tmp/hyp";
-		baseline.recognizeFileLanguage(goldSent, hypLangFilePath);
-		System.out.printf("System performance = %f\n", Performance.evaluate(goldLang, hypLangFilePath));
-	}
-
-
-	@Rule
-	public TestName name = new TestName();
-
-	
-	@Before
-	public void printSeparator()
-	{
-		System.out.println("\n=========== " + name.getMethodName() + " =====================");
-	}
 }

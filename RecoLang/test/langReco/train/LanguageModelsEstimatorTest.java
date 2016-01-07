@@ -25,8 +25,17 @@ public class LanguageModelsEstimatorTest {
 	 * to create a language model with words from texts in English and order 3.
 	 */
 	@Test
-	public void testCreateLmWordLangEnOrder3() {
-		// TODO			
+	public void testCreateLmWordLangDeOrder3() {
+		String trainDeFilePath = "data/train/train-de.txt";
+		
+		String lmDeFilePath = "lm/trigram-train-de.lm";
+
+		int order = 3;
+		
+		// building a language model of order 3 on De data 
+		NgramCounts DeNgramCounts = new MyNgramCounts();
+		DeNgramCounts.scanTextFile(trainDeFilePath, order);
+		DeNgramCounts.writeNgramCountFile(lmDeFilePath);		
 	}
 
 
