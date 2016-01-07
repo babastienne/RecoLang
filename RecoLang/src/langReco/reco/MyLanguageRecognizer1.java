@@ -1,13 +1,12 @@
 /**
- * MyLanguageRecognizer1 - first test for hte project
- * explication supplémentaire si nécessaire
+ * MyLanguageRecognizer1 - first test for the project
  * 
  * @version1.0
  *
  * @author Bastien POTIRON
  * @date 06/01/2016
  * @notes Still in developpement
- * 	Amméliorer les commentaire, respecter les normes de qualité de code
+ * 	Amméliorer les commentaires, respecter les normes de qualité de code
  */
 
 package langReco.reco;
@@ -39,11 +38,11 @@ public class MyLanguageRecognizer1 extends LanguageRecognizer {
 	public String recognizeSentenceLanguage(String sentence) {
 		
 		LanguageModel laplaceModel;
-		lang = new ArrayList<String>(getLanguages());
-		Double probaLanguePhrase = 0.0;
-		String language = ""; // variable qui sera retournée et contiendra le code pays correspondant à la langue de la phrase transmise en paramètre
+		lang = new ArrayList<String>(getLanguages()); 	// on créé une liste des langues existantes pour pouvoir ensuite la parcourir
+		Double probaLanguePhrase = 0.0;					// variable qui stockera la plus forte probabilité calculée
+		String language = ""; 							// variable qui sera retournée et contiendra le code pays correspondant à la langue de la phrase transmise en paramètre
 		
-		for (String codeLangue : lang) {
+		for (String codeLangue : lang) {				// on parcours la liste des langues
 	
 			laplaceModel = new MyLaplaceLanguageModel();
 			
@@ -59,7 +58,7 @@ public class MyLanguageRecognizer1 extends LanguageRecognizer {
 			}
 		}
 		
-		return language;
+		return language; // on retourne le code de la langue detectée pour la phrase
 		
 	}
 
