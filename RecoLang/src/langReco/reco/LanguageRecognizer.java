@@ -204,7 +204,7 @@ public abstract class LanguageRecognizer {
 			languagePrediction.append(langPredict);
 			languagePrediction.append("\n");
 //			if(i % 1000 == 0)
-				System.out.println("Phrases traitées jusqu'à " + i + "langue :" + langPredict);
+				System.out.println("Phrases traitées jusqu'à " + i + " langue :" + langPredict);
 			i ++;
 		}
 		

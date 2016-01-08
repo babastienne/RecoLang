@@ -8,6 +8,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
+import langModel.MiscUtil;
 import langModel.MyNgramCounts;
 import langModel.NgramCounts;
 
@@ -18,9 +19,8 @@ import langModel.NgramCounts;
 public class LanguageModelsEstimatorTest {
 
 	/**
-	 * Duplicate this method as many times as you want to create a language model.
-	 * Give it an explicit name with respect to the created language model e.g. testCreateLmWordLangEnOrder3
-	 * to create a language model with words from texts in English and order 3.
+	 * Method used to create a language model for each train text with order 3.
+	 * The method also generate the config file for localize the trigrams models.
 	 */
 	@Test
 	public void testCreateLmWordLangOrder3() {
@@ -39,20 +39,23 @@ public class LanguageModelsEstimatorTest {
 		
 		String trainFilePathShort = "data/train/train-"; 	// Chaine contenant la première partie du chemin vers le fichier
 		String lmFilePathShort = "lm/trigram-train-"; 		// Chaine contenant la première partie du chemin vers le fichier qui sera créé
-		int order = 3; // Le ngram créé sera d'ordre 3
+		int order = 3; 										// Le ngram créé sera d'ordre 3
 		NgramCounts NgramCounts;
-		String trainFilePathComplete, lmFilePathComplete;
-		
+		String configFile = ""; 							// La variable servira à contenir le chemin des fichiers lm pour le fichier de conf
 		
 		for( String language : lang ) {
 			
-			trainFilePathComplete = trainFilePathShort + language + ".txt"; // A chaque iteration le début du chemin est le même, puis on ajoute le code de la langue et ".txt"
-			lmFilePathComplete = lmFilePathShort + language + ".lm";		// A chaque itération on complète le chemin du fichier créé
 			NgramCounts= new MyNgramCounts();
-			NgramCounts.scanTextFile(trainFilePathComplete, order);
-			NgramCounts.writeNgramCountFile(lmFilePathComplete);
+			NgramCounts.scanTextFile(trainFilePathShort + language + ".txt", order);
 			
-		}		
+			NgramCounts.writeNgramCountFile(lmFilePathShort + language + ".lm");
+			
+			configFile = configFile + language + " " + language + "_bi " +
+							lmFilePathShort + language + ".lm" + "\n"; // on créé la chaine de caractère contenant les chemins vers les fichiers
+			
+		}
+		
+		MiscUtil.writeFile(configFile, "lm/fichConfig_trigram.txt", false); // on place notre chaine de caractère configFile dans notre fichier de configuration
 		
 	}
 

@@ -1,11 +1,11 @@
 /**
- * MyLanguageRecognizer1 - first test for the project
+ * MyLanguageRecognizer1
  * 
  * @version1.0
  *
  * @author Bastien POTIRON
  * @date 06/01/2016
- * @notes Still in developpement
+ * @notes 
  * 	Amméliorer les commentaires, respecter les normes de qualité de code
  */
 
@@ -51,7 +51,9 @@ public class MyLanguageRecognizer1 extends LanguageRecognizer {
 					(String) super.langNgramCountMap.get (codeLangue).keySet ().toArray ()[0]));
 			
 			laplaceModel.setNgramCounts(test);
-			
+			// datas for tests
+				//System.out.println("Langue testée : " + codeLangue + " proba : " + laplaceModel.getSentenceProb(sentence));
+			// end of datas for tests
 			if (laplaceModel.getSentenceProb(sentence) > probaLanguePhrase) { 	//On calcul la probabilité que la phrase soit dans la langue 'codeLangue'
 				probaLanguePhrase = laplaceModel.getSentenceProb(sentence); 	// Si la probabilité est suppérieur à celle calculée avant alors on stocke cette nouvelle probabilité
 				language = codeLangue; 											// On stocke également le code de la langue correspondante (exemple : fr)

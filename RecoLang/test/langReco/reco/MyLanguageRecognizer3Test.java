@@ -1,14 +1,14 @@
 /**
- * MyLanguageRecognizer1Test - Jubit test for the first languageRecognizer
- * Test a run with bigrams-100
+ * MyLanguageRecognizer3Test - Jubit test for the first languageRecognizer
+ * Test a run with trigrams-16000
  * 
  * @version1.0
  *
  * @author Bastien POTIRON
- * @date 07/01/2016
- * @notes Results of the test	
- * 		Time for the run : ~ 40 minutes
- * 		Result of the run : System Performance = 0,452350
+ * @date 08/01/2016
+ * @notes Results of the test
+ *  	Time for the run : Too long (~ 1 minute for 1 sentence)
+ *  	Result of the run : For 30 sentences = 4~5 errors
  */
 
 package langReco.reco;
@@ -20,16 +20,16 @@ import org.junit.rules.TestName;
 
 import langReco.eval.Performance;
 
-public class MyLanguageRecognizer1Test {
+public class MyLanguageRecognizer3Test {
 
 	@Test
 	public void testBaselineLanguageRecognizer() {
 		String goldSent = "data/gold/gold-sent.txt";
 		String goldLang = "data/gold/gold-lang.txt";
 
-		MyLanguageRecognizer1 config = new MyLanguageRecognizer1("lm/fichConfig_bigram-100.txt");
+		MyLanguageRecognizer3 config = new MyLanguageRecognizer3("lm/fichConfig_trigram.txt");
 
-		String hypLangFilePath = "tmp/hyphoteseseLanguageRecognizer1WithBigram-100";
+		String hypLangFilePath = "tmp/hyphoteseseLanguageRecognizer3WithTrigram";
 		config.recognizeFileLanguage(goldSent, hypLangFilePath);
 		System.out.println("Performance of the run = " + Performance.evaluate(goldLang, hypLangFilePath));
 	}
