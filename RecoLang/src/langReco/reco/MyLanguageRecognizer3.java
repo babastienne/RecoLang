@@ -55,6 +55,10 @@ public class MyLanguageRecognizer3 extends LanguageRecognizer {
 			// end of datas for tests
 			if (laplaceModel.getSentenceProb(sentence) > probaLanguePhrase) { 	//On calcul la probabilité que la phrase soit dans la langue 'codeLangue'
 				probaLanguePhrase = laplaceModel.getSentenceProb(sentence); 	// Si la probabilité est suppérieur à celle calculée avant alors on stocke cette nouvelle probabilité
+				
+				//just for test
+				System.out.println("Size of vocabulary : " + laplaceModel.getVocabularySize());
+				
 				language = codeLangue; 											// On stocke également le code de la langue correspondante (exemple : fr)
 			}
 		}

@@ -50,12 +50,53 @@ public class LanguageModelsEstimatorTest {
 			
 			NgramCounts.writeNgramCountFile(lmFilePathShort + language + ".lm");
 			
-			configFile = configFile + language + " " + language + "_bi " +
+			configFile = configFile + language + " " + language + "_tri " +
 							lmFilePathShort + language + ".lm" + "\n"; // on créé la chaine de caractère contenant les chemins vers les fichiers
 			
 		}
 		
 		MiscUtil.writeFile(configFile, "lm/fichConfig_trigram.txt", false); // on place notre chaine de caractère configFile dans notre fichier de configuration
+		
+	}
+	
+	/**
+	 * Method used to create a language model for each train text with order 1.
+	 * The method also generate the config file for localize the unigrams models.
+	 */
+	@Test
+	public void testCreateLmWordLangOrder1() {
+		ArrayList<String> lang = new ArrayList<String>();
+
+			lang.add("de");
+			lang.add("es");
+			lang.add("et");
+			lang.add("hu");
+			lang.add("it");
+			lang.add("lv");
+			lang.add("nl");
+			lang.add("pl");
+			lang.add("pt");
+			lang.add("sv");
+		
+		String trainFilePathShort = "data/train/train-"; 	// Chaine contenant la première partie du chemin vers le fichier
+		String lmFilePathShort = "lm/unigram-train-"; 		// Chaine contenant la première partie du chemin vers le fichier qui sera créé
+		int order = 1; 										// Le ngram créé sera d'ordre 1
+		NgramCounts NgramCounts;
+		String configFile = ""; 							// La variable servira à contenir le chemin des fichiers lm pour le fichier de conf
+		
+		for( String language : lang ) {
+			
+			NgramCounts= new MyNgramCounts();
+			NgramCounts.scanTextFile(trainFilePathShort + language + ".txt", order);
+			
+			NgramCounts.writeNgramCountFile(lmFilePathShort + language + ".lm");
+			
+			configFile = configFile + language + " " + language + "_uni " +
+							lmFilePathShort + language + ".lm" + "\n"; // on créé la chaine de caractère contenant les chemins vers les fichiers
+			
+		}
+		
+		MiscUtil.writeFile(configFile, "lm/fichConfig_unigram.txt", false); // on place notre chaine de caractère configFile dans notre fichier de configuration
 		
 	}
 

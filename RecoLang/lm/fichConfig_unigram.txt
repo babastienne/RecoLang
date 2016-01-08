@@ -1,0 +1,10 @@
+de de_uni lm/unigram-train-de.lm
+es es_uni lm/unigram-train-es.lm
+et et_uni lm/unigram-train-et.lm
+hu hu_uni lm/unigram-train-hu.lm
+it it_uni lm/unigram-train-it.lm
+lv lv_uni lm/unigram-train-lv.lm
+nl nl_uni lm/unigram-train-nl.lm
+pl pl_uni lm/unigram-train-pl.lm
+pt pt_uni lm/unigram-train-pt.lm
+sv sv_uni lm/unigram-train-sv.lm
