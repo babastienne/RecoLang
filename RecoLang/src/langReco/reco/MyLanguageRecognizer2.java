@@ -11,9 +11,9 @@
 
 package langReco.reco;
 
-import java.util.ArrayList;
-
-import com.sun.org.apache.xerces.internal.xni.grammars.Grammar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 import langModel.LanguageModel;
 import langModel.MyLaplaceLanguageModel;
@@ -21,6 +21,12 @@ import langModel.MyNgramCounts;
 import langModel.NgramCounts;
 
 public class MyLanguageRecognizer2 extends LanguageRecognizer {
+	
+	private int identicalWords = 0;
+	
+	private NgramCounts unigramOfTheSentence = new MyNgramCounts();
+	
+	private Map<String, Integer> langWithIdenticalwords = new HashMap<String, Integer>(); 
 	
 	/**
 	 * Constructor of the MyLanguageRecognizer1 class.
@@ -39,29 +45,38 @@ public class MyLanguageRecognizer2 extends LanguageRecognizer {
 	@Override
 	public String recognizeSentenceLanguage(String sentence) {
 		
-		LanguageModel laplaceModel;
-		lang = new ArrayList<String>(getLanguages()); 	// on créé une liste des langues existantes pour pouvoir ensuite la parcourir
-		Double probaLanguePhrase = 0.0;					// variable qui stockera la plus forte probabilité calculée
-		String language = "unk"; 						// variable qui sera retournée et contiendra le code pays correspondant à la langue de la phrase transmise en paramètre
+		generateUnigramForTheSentence(sentence); 		// on génère les unigrams pour la phrase
+				
+		Map<String, Integer> myLanguages = languageIsUnknown();
+ 
+		String language = "";
 		
-		for (String codeLangue : lang) {				// on parcours la liste des langues
-	
-			laplaceModel = new MyLaplaceLanguageModel();
+		if(myLanguages.size() > 0) {
 			
-			NgramCounts NgramOfCodeLangue = new MyNgramCounts();
-			NgramOfCodeLangue.readNgramCountsFile ( this.getNgramCountPath( codeLangue,
-					(String) super.langNgramCountMap.get (codeLangue).keySet ().toArray ()[0]));
+			Double probaLanguePhrase = 0.0;
+			LanguageModel laplaceModel;
 			
-			laplaceModel.setNgramCounts(NgramOfCodeLangue);
-			if(!this.languageIsUnknown(sentence, codeLangue)) {
-				if (laplaceModel.getSentenceProb(sentence) > probaLanguePhrase) { 	//On calcul la probabilité que la phrase soit dans la langue 'codeLangue'
+			for (String codeLangue : myLanguages.keySet()) {				// on parcours la liste des langues
+		
+				laplaceModel = new MyLaplaceLanguageModel();
+				
+				NgramCounts NgramOfCodeLangue = new MyNgramCounts();
+				NgramOfCodeLangue.readNgramCountsFile ( this.getNgramCountPath( codeLangue,
+						(String) super.langNgramCountMap.get (codeLangue).keySet ().toArray ()[0]));
+				
+				laplaceModel.setNgramCounts(NgramOfCodeLangue);
+				
+				if ( ( identicalWords * laplaceModel.getSentenceProb( sentence ) ) > probaLanguePhrase ) { 	//On calcul la probabilité que la phrase soit dans la langue 'codeLangue'
 					probaLanguePhrase = laplaceModel.getSentenceProb(sentence); 	// Si la probabilité est suppérieur à celle calculée avant alors on stocke cette nouvelle probabilité
 					language = codeLangue; 											// On stocke également le code de la langue correspondante (exemple : fr)
 				}
 			}
+			
+			return (language == "") ? "unk" : language; // on retourne le code de la langue detectée pour la phrase
+			
+		} else {
+			return "unk";
 		}
-		
-		return language; // on retourne le code de la langue detectée pour la phrase
 		
 	}
 	
@@ -76,26 +91,65 @@ public class MyLanguageRecognizer2 extends LanguageRecognizer {
 	 * @return boolean vrai si inconnue sinon fausse
 	 * 
 	 * Pour cela la méthode compare tout les unigrammes d'une langue (chaque mot) avec les mots de la phrase.
-	 * Une phrase est qualifiée de langue inconnue si aucun mot de la phrase ne correspond à un mot de la langue voulue.
+	 * Une phrase est qualifiée de langue inconnue si moins de la moitié des unigrams la composant fait partie du dictionnaire d'une langue.
 	 */
-	public boolean languageIsUnknown(java.lang.String sentence, String codeLangue) {
-//		MyNaiveLanguageModel laplace = new MyNaiveLanguageModel();
-		NgramCounts UnigramOfTheSentence = new MyNgramCounts();
-		UnigramOfTheSentence.scanTextString(sentence, 1); // on genere les unigrams de la phrase
+	public Map<String, Integer> languageIsUnknown() {
 		
-		NgramCounts UnigramOfCodeLangue = new MyNgramCounts();
-		UnigramOfCodeLangue.readNgramCountsFile("lm/unigram-train-" + codeLangue + ".lm");
-		int num = 0;
-		for(String lang : UnigramOfCodeLangue.getNgrams()) {	
-
-			for(String gramSentence : UnigramOfTheSentence.getNgrams()) {
-				
-				if( gramSentence.equals(lang) ) num++;
-				
-			}
+		numberOfWordsInLanguage();
+		
+		int totalIdenticalWords = 0;
+		for(int word : langWithIdenticalwords.values()) {
+			totalIdenticalWords += word;
 		}
-		System.out.println(codeLangue + " : " + num);
-		return(num > 3) ? false : true;
+
+		int moyenneWord = totalIdenticalWords / langWithIdenticalwords.size();
+		
+		Map<String, Integer> myLanguages = new HashMap<String, Integer>(); 
+		
+		for(String codeLangue : langWithIdenticalwords.keySet()) {
+			if (langWithIdenticalwords.get(codeLangue) > moyenneWord) 
+				if(langWithIdenticalwords.get(codeLangue) > unigramOfTheSentence.getTotalWordNumber() / 2) myLanguages.put(codeLangue, langWithIdenticalwords.get(codeLangue));
+		}
+		
+		return myLanguages;
+		
+	}
+	
+	/*
+	 * (non-javadoc)
+	 * Cette méthode renvoi le nombre de mot de la phrase recherché qui existent également dans la langue (correspondante à codelangue)
+	 * On peut ainsi savoir si la phrase appartient au dictionnaire de la langue
+	 */
+	public void numberOfWordsInLanguage () {
+		
+		NgramCounts unigramOfCodeLangue = new MyNgramCounts();
+		
+		Set<String> lang = getLanguages();
+		
+		for (String codeLangue : lang) {
+			
+			unigramOfCodeLangue.readNgramCountsFile("lm/unigram-train-" + codeLangue + ".lm");
+			
+			identicalWords = 0; // on réinitialise le nombre de mots identiques
+			
+			for(String language : unigramOfCodeLangue.getNgrams()) {	
+
+				for(String gramSentence : unigramOfTheSentence.getNgrams()) {
+					
+					if( gramSentence.equals(language) ) identicalWords++;
+					
+				}
+			}
+			
+			langWithIdenticalwords.put(codeLangue, identicalWords);
+			
+		}
+
+
+	}
+	
+	private void generateUnigramForTheSentence (String sentence) {
+		unigramOfTheSentence.scanTextString(sentence, 1); // on genere les unigrams de la phrase
 	}
 
 }

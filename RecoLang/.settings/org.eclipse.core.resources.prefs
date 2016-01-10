@@ -1,0 +1,4 @@
+eclipse.preferences.version=1
+encoding//data/gold/gold-sent.txt=UTF-8
+encoding//data/gold/test-lang.txt=UTF-8
+encoding//data/gold/test-sent.txt=UTF-8
