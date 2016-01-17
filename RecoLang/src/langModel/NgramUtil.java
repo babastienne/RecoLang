@@ -13,7 +13,6 @@ import java.util.List;
  */
 public class NgramUtil {
 
-		private int nbrWord;
 	/**
 	 * Method counting the number of words in a given sequence 
 	 * (the sequence can be a n-gram or a sentence).
@@ -22,8 +21,7 @@ public class NgramUtil {
 	 * @return the number of words of the given sequence.
 	 */
 	public static int getSequenceSize (String sequence) {
-		String[] tabMots= sequence.split("\\s+");
-		return tabMots.length; 
+		return sequence.split("\\s+").length; 
 	}
 
 	

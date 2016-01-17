@@ -35,7 +35,27 @@ public class MyNgramCountsTest {
 		ngram.incCounts("li li li");
 		ngram.incCounts("lo lo lo");
 		ngram.incCounts("lo lo lo");
+		System.out.println(ngram.getTotalWordNumber());
 		assertEquals(4,ngram.getTotalWordNumber());
+	}
+	
+	@Test
+	public void testscantTestString() {
+		MyNgramCounts ngram = new MyNgramCounts();
+		ngram.scanTextString("la lo li lu", 3); // [la,lo, li, lu, la lo, lo, li, li lu, la lo li, lo li lu]
+		MyNgramCounts compareNgram = new MyNgramCounts();
+		compareNgram.incCounts("la");
+		compareNgram.incCounts("lo");
+		compareNgram.incCounts("li");
+		compareNgram.incCounts("lu");
+		compareNgram.incCounts("la lo");
+		compareNgram.incCounts("lo li");
+		compareNgram.incCounts("li lu");
+		compareNgram.incCounts("la lo li");
+		compareNgram.incCounts("lo li lu");
+		
+		System.out.println(ngram.getNgrams());
+		assertEquals(compareNgram.getNgrams(), ngram.getNgrams());
 	}
 	
 
@@ -68,7 +88,7 @@ public class MyNgramCountsTest {
 		liste.add("li li li");
 		liste.add("la la la");
 		liste.add("lo lo lo"); // Car getNgrams ne prend pas en compte les doublons ( dû à la méthode incCounts)
-		System.out.println(ngram.getCounts("la la la"));
+//		System.out.println(ngram.getCounts("la la la"));
 		assertEquals(liste,ngram.getNgrams());
 	}
 	
@@ -80,7 +100,7 @@ public class MyNgramCountsTest {
 		ngram.incCounts("li li li");
 		ngram.incCounts("lo lo lo");
 		ngram.incCounts("lo lo lo");
-		System.out.println(ngram.getCounts("la la la"));
+//		System.out.println(ngram.getCounts("la la la"));
 		assertEquals(1,ngram.getCounts("la la la"));
 		assertEquals(2,ngram.getCounts("lo lo lo"));
 	}

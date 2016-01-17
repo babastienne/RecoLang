@@ -99,7 +99,7 @@ public class LanguageModelsEstimatorTest {
 		
 		String trainFilePathShort = "data/train/train-"; 	// Chaine contenant la première partie du chemin vers le fichier
 		String lmFilePathShort = "lm/bigram-train-"; 		// Chaine contenant la première partie du chemin vers le fichier qui sera créé
-		int order = 1; 										// Le ngram créé sera d'ordre 1
+		int order = 2; 										// Le ngram créé sera d'ordre 1
 		NgramCounts NgramCounts;
 		String configFile = ""; 							// La variable servira à contenir le chemin des fichiers lm pour le fichier de conf
 		

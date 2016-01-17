@@ -17,7 +17,7 @@ public class MyLaplaceLanguageModel extends MyNaiveLanguageModel {
 		double countBis = 0.0;
 		String wArray[];
 		String ngrameBis="";
-		System.out.println(this.ngramCounts.getCounts(ngram));
+//		System.out.println(this.ngramCounts.getCounts(ngram));
 		
 		if(this.ngramCounts.getCounts(ngram)!=0){
 			count = this.ngramCounts.getCounts(ngram);
@@ -26,7 +26,7 @@ public class MyLaplaceLanguageModel extends MyNaiveLanguageModel {
 				ngrameBis =ngrameBis + wArray[i] + " ";
 			}
 			ngrameBis =ngrameBis + wArray[wArray.length-1];
-			System.out.println(ngrameBis);
+//			System.out.println(ngrameBis);
 			if(this.ngramCounts.getCounts(ngrameBis)!=0){
 				countBis = this.ngramCounts.getCounts(ngrameBis);
 			} else {

@@ -15,6 +15,7 @@ import java.util.Set;
 
 import langModel.LanguageModel;
 import langModel.MyLaplaceLanguageModel;
+import langModel.MyNaiveLanguageModel;
 import langModel.MyNgramCounts;
 import langModel.NgramCounts;
 
@@ -48,7 +49,7 @@ public class MyLanguageRecognizer2 extends LanguageRecognizer {
 
 	for (String codeLangue : myLanguagesWords) {				// on parcours la liste des langues pré-selectionnées
 
-	    laplaceModel = new MyLaplaceLanguageModel();
+	    laplaceModel = new MyNaiveLanguageModel();
 
 	    NgramCounts NgramOfCodeLangue = new MyNgramCounts();
 	    NgramOfCodeLangue.readNgramCountsFile ( this.getNgramCountPath( codeLangue,
@@ -56,6 +57,7 @@ public class MyLanguageRecognizer2 extends LanguageRecognizer {
 
 	    laplaceModel.setNgramCounts(NgramOfCodeLangue);
 	    double probaPhrase = laplaceModel.getSentenceProb(sentence);
+//	    System.out.println(codeLangue + " proba : " + probaPhrase);
 	    if (probaPhrase > probaLanguePhrase) { 	//On calcul la probabilitÃ© que la phrase soit dans la langue 'codeLangue'
 	    	probaLanguePhrase = probaPhrase; 	// Si la probabilitÃ© est suppÃ©rieur Ã  celle calculÃ©e avant alors on stocke cette nouvelle probabilitÃ©
 	    	language = codeLangue; 						// On stocke Ã©galement le code de la langue correspondante (exemple : fr)

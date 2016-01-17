@@ -1,10 +1,8 @@
 package langModel;
 
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -60,14 +58,12 @@ public class MyNgramCounts implements NgramCounts {
 	
 	@Override
 	public int getMaximalOrder() {
-		// TODO Auto-generated method stub
 		return this.order;
 	}
 
 	
 	@Override
 	public int getNgramCounterSize() {
-		// TODO Auto-generated method stub
 		return this.ngramCounts.size();
 		
 	}
@@ -75,11 +71,7 @@ public class MyNgramCounts implements NgramCounts {
 	
 	@Override
 	public int getTotalWordNumber(){
-		int finale = 0;
-		for (int occ: this.ngramCounts.values()){
-			finale += occ;
-		}
-		return finale;
+	    return this.nbWordsTotal;
 	}
 	
 	
@@ -107,14 +99,15 @@ public class MyNgramCounts implements NgramCounts {
 		}
 		else{
 			setCounts(ngram, 1);
-		}
-			
+		}			
 	}
 
 	
 	@Override
 	public void setCounts(String ngram, int counts) {
-			this.ngramCounts.put(ngram, counts);
+	    this.ngramCounts.put(ngram, counts);
+	    this.nbWordsTotal++;
+//	    System.out.println(this.ngramCounts.get(ngram));
 	}
 
 
@@ -123,39 +116,48 @@ public class MyNgramCounts implements NgramCounts {
 	
 	@Override
 	public void scanTextString(String text, int maximalOrder) {
+//	    this.nbWordsTotal += NgramUtil.getSequenceSize(text);
 		List<String> liste = NgramUtil.generateNgrams(text, 1, maximalOrder);
 		for(String ngram : liste)
 			this.incCounts(ngram);
+		this.setMaximalOrder(maximalOrder);
 	}
 
 	
 	@Override
 	public void scanTextFile(String filePath, int maximalOrder) {
-		List<String> sentences = MiscUtil.readTextFileAsStringList(filePath);
+	    
+	    List<String> sentences = MiscUtil.readTextFileAsStringList(filePath);
 	    for(String ligne : sentences){
-	    	this.scanTextFile(ligne, maximalOrder);
+	    	this.scanTextString(ligne, maximalOrder);
 	    } 
-		setMaximalOrder(maximalOrder);
 	}
 
 	
 	@Override
 	public void writeNgramCountFile(String filePath) {
-			String ligne = "";
-		    for(String cle : this.ngramCounts.keySet()) {
-		    	ligne = ligne+ this.ngramCounts.get(cle)+"\t"+cle+"\n";
-		    }
-		    MiscUtil.writeFile(ligne, filePath, false);
+		StringBuffer ligne = new StringBuffer();
+		for(String cle : this.ngramCounts.keySet()) {
+		    ligne.append(cle);
+		    ligne.append("\t");
+		    ligne.append(this.ngramCounts.get(cle));
+		    ligne.append("\n");
+//		    ligne = ligne+ cle + "\t" + this.ngramCounts.get(cle) + "\n";
+		}
+		MiscUtil.writeFile(ligne.toString(), filePath, false);
 	}
 
 	@Override
 	public void readNgramCountsFile(String filePath) {
-		List<String> sentences = MiscUtil.readTextFileAsStringList(filePath);
+	    List<String> sentences = MiscUtil.readTextFileAsStringList(filePath);
 	    for(String ligne : sentences) {
 	    	String[] NgramAndCount = ligne.split("\t");
-	    	setCounts(NgramAndCount[0], Integer.parseInt(NgramAndCount[1]));
+	    	this.setCounts(NgramAndCount[0], Integer.parseInt(NgramAndCount[1]));
+	    	if(this.getMaximalOrder() < NgramAndCount[0].split("\\s+").length) {
+	    	    this.setMaximalOrder(NgramAndCount[0].split("\\s+").length);
+	    	}
+
 	    }
-	    
 	}
 
 }
