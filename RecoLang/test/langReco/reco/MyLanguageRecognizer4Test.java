@@ -8,7 +8,7 @@
  * @date 08/01/2016
  * @notes Results of the test
  * 		Time of the run for 2000 sentences :
- *  	performance  ~ 
+ *  	performance  = 0.9954
  */
 
 package langReco.reco;
@@ -24,8 +24,8 @@ public class MyLanguageRecognizer4Test {
 
 	@Test
 	public void testBaselineLanguageRecognizer() {
-		String goldSent = "data/gold/test-sent.txt";
-		String goldLang = "data/gold/test-lang.txt";
+		String goldSent = "data/gold/gold-sent.txt";
+		String goldLang = "data/gold/gold-lang.txt";
 
 		MyLanguageRecognizer2 config = new MyLanguageRecognizer2("lm/fichConfig_bigram.txt");
 

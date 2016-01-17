@@ -55,8 +55,9 @@ public class MyLanguageRecognizer2 extends LanguageRecognizer {
 		    (String) super.langNgramCountMap.get (codeLangue).keySet ().toArray ()[0]));
 
 	    laplaceModel.setNgramCounts(NgramOfCodeLangue);
-	    if (laplaceModel.getSentenceProb(sentence) > probaLanguePhrase) { 	//On calcul la probabilitÃ© que la phrase soit dans la langue 'codeLangue'
-	    	probaLanguePhrase = laplaceModel.getSentenceProb(sentence); 	// Si la probabilitÃ© est suppÃ©rieur Ã  celle calculÃ©e avant alors on stocke cette nouvelle probabilitÃ©
+	    double probaPhrase = laplaceModel.getSentenceProb(sentence);
+	    if (probaPhrase > probaLanguePhrase) { 	//On calcul la probabilitÃ© que la phrase soit dans la langue 'codeLangue'
+	    	probaLanguePhrase = probaPhrase; 	// Si la probabilitÃ© est suppÃ©rieur Ã  celle calculÃ©e avant alors on stocke cette nouvelle probabilitÃ©
 	    	language = codeLangue; 						// On stocke Ã©galement le code de la langue correspondante (exemple : fr)
 	    }
 	}
