@@ -28,24 +28,39 @@ public abstract class MyNaiveLanguageModel implements LanguageModel {
     }
 
 
+    /* (non-Javadoc)
+     * @see langModel.LanguageModel#setNgramCounts(langModel.NgramCounts)
+     */
     public void setNgramCounts(NgramCounts ngram) {
 	this.ngramCounts = ngram;
 	this.vocabulary.scanNgramSet(this.ngramCounts.getNgrams());
     }
 
+    /* (non-Javadoc)
+     * @see langModel.LanguageModel#getLMOrder()
+     */
     @Override
     public int getLMOrder() {
 	return this.ngramCounts.getMaximalOrder();
     }
 
+    /* (non-Javadoc)
+     * @see langModel.LanguageModel#getVocabularySize()
+     */
     @Override
     public int getVocabularySize() {
 	return this.ngramCounts.getNgramCounterSize();
     }
 
+    /* (non-Javadoc)
+     * @see langModel.LanguageModel#getNgramProb(java.lang.String)
+     */
     @Override
     public abstract Double getNgramProb(String ngram); 
 
+    /* (non-Javadoc)
+     * @see langModel.LanguageModel#getSentenceProb(java.lang.String)
+     */
     @Override
     public Double getSentenceProb(String sentence) {
 	Double proba = 1.0;

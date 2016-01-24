@@ -6,24 +6,24 @@ import java.util.HashSet;
 
 import org.junit.Test;
 
-public class MyNgramCountsTest {	
+public class MyNgramCountsTest {
 
     @Test
-    public void testSetMaximalOrder (){
+    public void testSetMaximalOrder() {
 	MyNgramCounts ngram = new MyNgramCounts();
 	ngram.setMaximalOrder(5);
-	assertEquals(5,ngram.order);
+	assertEquals(5, ngram.order);
     }
 
-    //' Nombre de ngrame sans prendre en compte les doublons'
+    // ' Nombre de ngrame sans prendre en compte les doublons'
     @Test
-    public void testgetNgramCounterSize(){
+    public void testgetNgramCounterSize() {
 	MyNgramCounts ngram = new MyNgramCounts();
 	ngram.incCounts("la la la");
 	ngram.incCounts("li li li");
 	ngram.incCounts("lo lo lo");
 	ngram.incCounts("lo lo lo");
-	assertEquals(3,ngram.getNgramCounterSize());
+	assertEquals(3, ngram.getNgramCounterSize());
     }
 
     // Prends en compte les doublons
@@ -34,11 +34,11 @@ public class MyNgramCountsTest {
 	ngram.incCounts("li li li");
 	ngram.incCounts("lo lo lo");
 	ngram.incCounts("lo lo lo");
-	assertEquals(4,ngram.getTotalWordNumber());
+	assertEquals(4, ngram.getTotalWordNumber());
     }
 
     @Test
-    public void testgetNgrams(){
+    public void testgetNgrams() {
 	MyNgramCounts ngram = new MyNgramCounts();
 	ngram.incCounts("la la la");
 	ngram.incCounts("li li li");
@@ -47,46 +47,49 @@ public class MyNgramCountsTest {
 	HashSet<String> liste = new HashSet<String>();
 	liste.add("li li li");
 	liste.add("la la la");
-	liste.add("lo lo lo"); // Car getNgrams ne prend pas en compte les doublons ( dû à la méthode incCounts)
-	assertEquals(liste,ngram.getNgrams());
+	liste.add("lo lo lo"); // Car getNgrams ne prend pas en compte les
+			       // doublons ( dû à la méthode incCounts)
+	assertEquals(liste, ngram.getNgrams());
     }
 
     @Test
-    public void testgetCounts(){
+    public void testgetCounts() {
 	MyNgramCounts ngram = new MyNgramCounts();
 	ngram.incCounts("la la la");
 	ngram.incCounts("li li li");
 	ngram.incCounts("lo lo lo");
 	ngram.incCounts("lo lo lo");
-	assertEquals(1,ngram.getCounts("la la la"));
-	assertEquals(2,ngram.getCounts("lo lo lo"));
+	assertEquals(1, ngram.getCounts("la la la"));
+	assertEquals(2, ngram.getCounts("lo lo lo"));
     }
 
     @Test
-    public void testincCounts(){
+    public void testincCounts() {
 	MyNgramCounts ngram = new MyNgramCounts();
 	ngram.incCounts("lalala");
-	assertEquals(1,ngram.getCounts("lalala"));
+	assertEquals(1, ngram.getCounts("lalala"));
 	ngram.incCounts("lalala");
 	ngram.incCounts("li li li");
 	ngram.incCounts("lo lo lo");
 	ngram.incCounts("lo lo lo");
-	assertEquals(2,ngram.getCounts("lalala"));
+	assertEquals(2, ngram.getCounts("lalala"));
     }
 
-    @Test 
-    public void testsetCounts(){
+    @Test
+    public void testsetCounts() {
 	MyNgramCounts ngram = new MyNgramCounts();
-	ngram.setCounts("lalala",3);
-	assertEquals(3,ngram.getCounts("lalala"));
-	ngram.setCounts("lalala",10);
-	assertEquals(10,ngram.getCounts("lalala"));	
+	ngram.setCounts("lalala", 3);
+	assertEquals(3, ngram.getCounts("lalala"));
+	ngram.setCounts("lalala", 10);
+	assertEquals(10, ngram.getCounts("lalala"));
     }
 
     @Test
     public void testscantTestString() {
 	MyNgramCounts ngram = new MyNgramCounts();
-	ngram.scanTextString("la lo li lu", 3); // [la,lo, li, lu, la lo, lo, li, li lu, la lo li, lo li lu]
+	ngram.scanTextString("la lo li lu", 3); // [la,lo, li, lu, la lo, lo,
+						// li, li lu, la lo li, lo li
+						// lu]
 	MyNgramCounts compareNgram = new MyNgramCounts();
 	compareNgram.incCounts("la");
 	compareNgram.incCounts("lo");
