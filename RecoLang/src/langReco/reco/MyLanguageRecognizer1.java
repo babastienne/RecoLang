@@ -6,7 +6,7 @@
  * @author Bastien POTIRON
  * @date 06/01/2016
  * @notes 
- * 	Amméliorer les commentaires, respecter les normes de qualité de code
+ * 	Ammï¿½liorer les commentaires, respecter les normes de qualitï¿½ de code
  */
 
 package langReco.reco;
@@ -28,7 +28,7 @@ public class MyLanguageRecognizer1 extends LanguageRecognizer {
 	 */
 	public MyLanguageRecognizer1(String directoryToConfigurationFile) {
 		super(); 															// on appel le constructeur de LanguageRecognizer.java
-		super.loadNgramCountPath4Lang(directoryToConfigurationFile);		// on déclare que la variable passée en paramètre contient le chemin du fichier de configuration (liste des langues ...)
+		super.loadNgramCountPath4Lang(directoryToConfigurationFile);		// on dï¿½clare que la variable passï¿½e en paramï¿½tre contient le chemin du fichier de configuration (liste des langues ...)
 	}
 	
 	/**
@@ -38,9 +38,9 @@ public class MyLanguageRecognizer1 extends LanguageRecognizer {
 	public String recognizeSentenceLanguage(String sentence) {
 		
 		LanguageModel laplaceModel;
-		lang = new ArrayList<String>(getLanguages()); 	// on créé une liste des langues existantes pour pouvoir ensuite la parcourir
-		Double probaLanguePhrase = 0.0;					// variable qui stockera la plus forte probabilité calculée
-		String language = ""; 							// variable qui sera retournée et contiendra le code pays correspondant à la langue de la phrase transmise en paramètre
+		lang = new ArrayList<String>(getLanguages()); 	// on crï¿½ï¿½ une liste des langues existantes pour pouvoir ensuite la parcourir
+		Double probaLanguePhrase = 0.0;					// variable qui stockera la plus forte probabilitï¿½ calculï¿½e
+		String language = ""; 							// variable qui sera retournï¿½e et contiendra le code pays correspondant ï¿½ la langue de la phrase transmise en paramï¿½tre
 		
 		for (String codeLangue : lang) {				// on parcours la liste des langues
 	
@@ -51,13 +51,13 @@ public class MyLanguageRecognizer1 extends LanguageRecognizer {
 					(String) super.langNgramCountMap.get (codeLangue).keySet ().toArray ()[0]));
 			
 			laplaceModel.setNgramCounts(test);
-			if (laplaceModel.getSentenceProb(sentence) > probaLanguePhrase) { 	//On calcul la probabilité que la phrase soit dans la langue 'codeLangue'
-				probaLanguePhrase = laplaceModel.getSentenceProb(sentence); 	// Si la probabilité est suppérieur à celle calculée avant alors on stocke cette nouvelle probabilité
-				language = codeLangue; 											// On stocke également le code de la langue correspondante (exemple : fr)
+			if (laplaceModel.getSentenceProb(sentence) > probaLanguePhrase) { 	//On calcul la probabilitï¿½ que la phrase soit dans la langue 'codeLangue'
+				probaLanguePhrase = laplaceModel.getSentenceProb(sentence); 	// Si la probabilitï¿½ est suppï¿½rieur ï¿½ celle calculï¿½e avant alors on stocke cette nouvelle probabilitï¿½
+				language = codeLangue; 											// On stocke ï¿½galement le code de la langue correspondante (exemple : fr)
 			}
 		}
 		
-		return language; // on retourne le code de la langue detectée pour la phrase
+		return language; // on retourne le code de la langue detectï¿½e pour la phrase
 		
 	}
 

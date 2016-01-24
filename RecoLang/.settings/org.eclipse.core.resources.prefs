@@ -2,3 +2,5 @@ eclipse.preferences.version=1
 encoding//data/gold/gold-sent.txt=UTF-8
 encoding//data/gold/test-lang.txt=UTF-8
 encoding//data/gold/test-sent.txt=UTF-8
+encoding//src/langReco/reco/MyLanguageRecognizer1.java=UTF-8
+encoding//src/langReco/reco/MyLanguageRecognizer3.java=UTF-8
