@@ -22,12 +22,12 @@ public class MyLanguageRecognizer3Test {
 
 	@Test
 	public void testBaselineLanguageRecognizer() {
-		String goldSent = "data/gold/test-sent.txt";
-		String goldLang = "data/gold/test-lang.txt";
+		String goldSent = "data/gold/micro-sent.txt";
+		String goldLang = "data/gold/micro-lang.txt";
 
 		MyLanguageRecognizer2 config = new MyLanguageRecognizer2("lm/fichConfig_unigram.txt");
 
-		String hypLangFilePath = "tmp/hyphoteseseLanguageRecognizer2WithUnigram";
+		String hypLangFilePath = "tmp/hyphoteseseLanguageRecognizer2WithUnigramMicro";
 		config.recognizeFileLanguage(goldSent, hypLangFilePath);
 		System.out.println("Performance of the run = " + Performance.evaluate(goldLang, hypLangFilePath));
 	}

@@ -60,7 +60,7 @@ public class NgramUtilTest {
 		liste.add("a b");
 		liste.add("b c");
 		liste.add("a b c");
-		System.out.println(ngram.generateNgrams(phrase, 1, 3));
+		System.out.println(ngram.generateNgrams(phrase, 1, 1));
 		assertEquals(liste, ngram.generateNgrams(phrase, 1, 3));
 	}
 
@@ -73,7 +73,7 @@ public class NgramUtilTest {
 		NgramUtil ngram = new NgramUtil();
 		String phrase = "a b c";
 		List<String> liste = new ArrayList<String>();
-		System.out.println(ngram.getHistory(phrase, 3));
+		System.out.println(ngram.getHistory(phrase, 1));
 		assertEquals("a b", ngram.getHistory(phrase, 3));
 	}
 

@@ -54,8 +54,8 @@ public class NgramUtil {
 	public static List<String> generateNgrams (String sentence, int minOrder, int maxOrder) {
 		List<String> ngrams = new ArrayList<String>();
 		
-		for(int n = minOrder; n <= maxOrder; n++) {
-			for(int i = 0; i <= sentence.split("\\s+").length-n; i++) {
+		for(int n = minOrder; n <= maxOrder; n++) { // Boucle qui varie selon l'ordre initial et l'ordre maximal
+			for(int i = 0; i <= sentence.split("\\s+").length-n; i++) { 
 				String ngram = "";
 				for(int j = i; j < i+n-1; j++) {
 					
@@ -83,14 +83,17 @@ public class NgramUtil {
 	 * @return history of the given n-gram (the length of the history is order-1).  
 	 */
 	public static String getHistory (String ngram, int order) {
-		if(order > 1) {
-			String[] sentenceArray = ngram.split("\\s+");
+		if(order > 1) { // Condition qui vérifie que l'ordre minimal est supérieur a 1
+			String[] sentenceArray = ngram.split("\\s+"); 
 			String history = "";
 			
-			for(int i = sentenceArray.length-order; i < sentenceArray.length-2; i++) {
+			for(int i = sentenceArray.length-order; i < sentenceArray.length-2; i++) { // Boucle qui permet de récupérer l'historique du ngram
 				history = history + sentenceArray[i] + " ";
 			}
-			history = history + sentenceArray[sentenceArray.length-2];
+
+			if(sentenceArray.length-2>0){ // Condition qui exclue les unigrammes
+				history = history + sentenceArray[sentenceArray.length-2]; // 
+			}
 			return history;
 		}
 		

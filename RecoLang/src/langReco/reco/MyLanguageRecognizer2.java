@@ -49,7 +49,7 @@ public class MyLanguageRecognizer2 extends LanguageRecognizer {
 
 	for (String codeLangue : myLanguagesWords) {				// on parcours la liste des langues pré-selectionnées
 
-	    laplaceModel = new MyNaiveLanguageModel();
+	    laplaceModel = new MyLaplaceLanguageModel();
 
 	    NgramCounts NgramOfCodeLangue = new MyNgramCounts();
 	    NgramOfCodeLangue.readNgramCountsFile ( this.getNgramCountPath( codeLangue,
@@ -75,7 +75,7 @@ public class MyLanguageRecognizer2 extends LanguageRecognizer {
      * @param sentence is the sentence to use for generate the unigram
      */
     public void generateUnigramOfTheSentence(String sentence) {
-	unigramOfTheSentence.scanTextString(sentence, 1); // on genere les unigrams de la phrase
+    	unigramOfTheSentence.scanTextString(sentence, 1); // on genere les unigrams de la phrase
     }
 
 }
