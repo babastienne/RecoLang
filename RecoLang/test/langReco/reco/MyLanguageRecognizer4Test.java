@@ -22,26 +22,26 @@ import langReco.eval.Performance;
 
 public class MyLanguageRecognizer4Test {
 
-	@Test
-	public void testBaselineLanguageRecognizer() {
-		String goldSent = "data/gold/micro-sent.txt";
-		String goldLang = "data/gold/micro-lang.txt";
+    @Test
+    public void testBaselineLanguageRecognizer() {
+	String goldSent = "data/gold/micro-sent.txt";
+	String goldLang = "data/gold/micro-lang.txt";
 
-		MyLanguageRecognizer2 config = new MyLanguageRecognizer2("lm/fichConfig_bigram.txt");
+	MyLanguageRecognizer2 config = new MyLanguageRecognizer2("lm/fichConfig_bigram.txt");
 
-		String hypLangFilePath = "tmp/hyphoteseseLanguageRecognizer2WithBigramMicro";
-		config.recognizeFileLanguage(goldSent, hypLangFilePath);
-		System.out.println("Performance of the run = " + Performance.evaluate(goldLang, hypLangFilePath));
-	}
+	String hypLangFilePath = "tmp/hyphoteseseLanguageRecognizer2WithBigramMicro";
+	config.recognizeFileLanguage(goldSent, hypLangFilePath);
+	System.out.println("Performance of the run = " + Performance.evaluate(goldLang, hypLangFilePath));
+    }
 
 
-	@Rule
-	public TestName name = new TestName();
+    @Rule
+    public TestName name = new TestName();
 
-	
-	@Before
-	public void printSeparator()
-	{
-		System.out.println("\n=========== " + name.getMethodName() + " =====================");
-	}
+
+    @Before
+    public void printSeparator()
+    {
+	System.out.println("\n=========== " + name.getMethodName() + " =====================");
+    }
 }

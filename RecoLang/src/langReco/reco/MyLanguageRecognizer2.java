@@ -15,7 +15,6 @@ import java.util.Set;
 
 import langModel.LanguageModel;
 import langModel.MyLaplaceLanguageModel;
-import langModel.MyNaiveLanguageModel;
 import langModel.MyNgramCounts;
 import langModel.NgramCounts;
 
@@ -44,7 +43,7 @@ public class MyLanguageRecognizer2 extends LanguageRecognizer {
 	String language = "unk"; 					// variable qui sera retournÃ©e et contiendra le code pays correspondant Ã  la langue de la phrase transmise en paramÃ¨tre
 
 	generateUnigramOfTheSentence(sentence);
-	
+
 	Set<String> myLanguagesWords = getLanguages();
 
 	for (String codeLangue : myLanguagesWords) {				// on parcours la liste des langues pré-selectionnées
@@ -57,13 +56,13 @@ public class MyLanguageRecognizer2 extends LanguageRecognizer {
 
 	    laplaceModel.setNgramCounts(NgramOfCodeLangue);
 	    double probaPhrase = laplaceModel.getSentenceProb(sentence);
-//	    System.out.println(codeLangue + " proba : " + probaPhrase);
+	    //	    System.out.println(codeLangue + " proba : " + probaPhrase);
 	    if (probaPhrase > probaLanguePhrase) { 	//On calcul la probabilitÃ© que la phrase soit dans la langue 'codeLangue'
-	    	probaLanguePhrase = probaPhrase; 	// Si la probabilitÃ© est suppÃ©rieur Ã  celle calculÃ©e avant alors on stocke cette nouvelle probabilitÃ©
-	    	language = codeLangue; 						// On stocke Ã©galement le code de la langue correspondante (exemple : fr)
+		probaLanguePhrase = probaPhrase; 	// Si la probabilitÃ© est suppÃ©rieur Ã  celle calculÃ©e avant alors on stocke cette nouvelle probabilitÃ©
+		language = codeLangue; 						// On stocke Ã©galement le code de la langue correspondante (exemple : fr)
 	    }
 	}
-	
+
 	return language; // on retourne le code de la langue detectÃ©e pour la phrase
 
     }
@@ -75,7 +74,7 @@ public class MyLanguageRecognizer2 extends LanguageRecognizer {
      * @param sentence is the sentence to use for generate the unigram
      */
     public void generateUnigramOfTheSentence(String sentence) {
-    	unigramOfTheSentence.scanTextString(sentence, 1); // on genere les unigrams de la phrase
+	unigramOfTheSentence.scanTextString(sentence, 1); // on genere les unigrams de la phrase
     }
 
 }

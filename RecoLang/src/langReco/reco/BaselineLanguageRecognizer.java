@@ -14,22 +14,22 @@ import java.util.Random;
  */
 public class BaselineLanguageRecognizer extends LanguageRecognizer {
 
-	public BaselineLanguageRecognizer() {
-		super();
-	}
+    public BaselineLanguageRecognizer() {
+	super();
+    }
 
-	public BaselineLanguageRecognizer(List<String> lang) {
-		super();
-		getLang().clear();
-		getLang().addAll(lang);
-	}
+    public BaselineLanguageRecognizer(List<String> lang) {
+	super();
+	getLang().clear();
+	getLang().addAll(lang);
+    }
 
-	
-	@Override
-	public String recognizeSentenceLanguage(String sentence) {	
-		Random rand = null;
-		rand = new Random(System.currentTimeMillis());
-		return lang.get(rand.nextInt(lang.size()));
-	}
+
+    @Override
+    public String recognizeSentenceLanguage(String sentence) {	
+	Random rand = null;
+	rand = new Random(System.currentTimeMillis());
+	return lang.get(rand.nextInt(lang.size()));
+    }
 
 }
