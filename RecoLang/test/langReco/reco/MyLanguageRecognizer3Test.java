@@ -16,20 +16,18 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
-import langReco.eval.Performance;
-
 public class MyLanguageRecognizer3Test {
 
     @Test
     public void testBaselineLanguageRecognizer() {
-	String goldSent = "data/gold/micro-sent.txt";
-	String goldLang = "data/gold/micro-lang.txt";
+	String goldSent = "data/gold/test-sent.txt";
+//	String goldLang = "data/gold/micro-lang.txt";
 
 	MyLanguageRecognizer2 config = new MyLanguageRecognizer2("lm/fichConfig_unigram.txt");
 
-	String hypLangFilePath = "tmp/hyphoteseseLanguageRecognizer2WithUnigramMicro";
+	String hypLangFilePath = "tmp/hyphoteseseLanguageRecognizer2WithUnigramTestRun";
 	config.recognizeFileLanguage(goldSent, hypLangFilePath);
-	System.out.println("Performance of the run = " + Performance.evaluate(goldLang, hypLangFilePath));
+//	System.out.println("Performance of the run = " + Performance.evaluate(goldLang, hypLangFilePath));
     }
 
 

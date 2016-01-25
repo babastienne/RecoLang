@@ -1,7 +1,6 @@
 package langReco.reco;
 
 
-import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,10 +10,6 @@ import org.junit.Test;
 import org.junit.rules.TestName;
 
 import langReco.eval.Performance;
-import langModel.LanguageModel;
-import langModel.MyLaplaceLanguageModel;
-import langModel.MyNgramCounts;
-import langModel.NgramCounts;
 
 
 /**
@@ -38,7 +33,7 @@ public class BaselineLanguageRecognizerTest {
 	// or use the following if you want to consider all the languages
 	// LanguageRecognizer baseline = new BaselineLanguageRecognizer();
 
-	String hypLangFilePath = "/tmp/hyp";
+	String hypLangFilePath = "tmp/hyp";
 	baseline.recognizeFileLanguage(goldSentPath, hypLangFilePath);
 	System.out.printf("System performance = %f\n", Performance.evaluate(goldLangPath, hypLangFilePath));
     }
