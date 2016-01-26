@@ -1,15 +1,12 @@
 package langReco.eval;
 
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
-
-import langReco.reco.BaselineLanguageRecognizer;
-import langReco.reco.LanguageRecognizer;
 
 
 /**
@@ -24,7 +21,7 @@ public class PerformanceTest {
 	public void testEvaluateStringString() {
 		String goldLangPath = "data/gold/gold-lang_sample.txt";
 		Double systemPerf = Performance.evaluate(goldLangPath, goldLangPath);
-		
+
 		System.out.printf("System performance = %f\n",systemPerf);
 		assertEquals(new Double(1.0), systemPerf);
 	}
@@ -33,7 +30,7 @@ public class PerformanceTest {
 	@Rule
 	public TestName name = new TestName();
 
-	
+
 	@Before
 	public void printSeparator()
 	{

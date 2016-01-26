@@ -1,12 +1,14 @@
 /**
  * MyLanguageRecognizer3Test - Junit test for the third languageRecognizer
- * Test a run with unigram 16000
+ * Test a run with bigram 16000
  * 
  * @version1.0
  *
  * @author Bastien POTIRON
  * @date 08/01/2016
- * @notes Results of the test
+ * @notes Results of the run on gold-sent :
+ * 		Time :			100.646 sec
+ * 		Performance : 	0.99535	
  */
 
 package langReco.reco;
@@ -18,26 +20,24 @@ import org.junit.rules.TestName;
 
 public class MyLanguageRecognizer3Test {
 
-    @Test
-    public void testBaselineLanguageRecognizer() {
-	String goldSent = "data/gold/test-sent.txt";
-//	String goldLang = "data/gold/micro-lang.txt";
+	@Test
+	public void testBaselineLanguageRecognizer() {
+		String goldSent = "run/test-sent.txt";
 
-	MyLanguageRecognizer2 config = new MyLanguageRecognizer2("lm/fichConfig_unigram.txt");
+		MyLanguageRecognizer3 config = new MyLanguageRecognizer3("lm/fichConfig_bigram.txt");
 
-	String hypLangFilePath = "tmp/hyphoteseseLanguageRecognizer2WithUnigramTestRun";
-	config.recognizeFileLanguage(goldSent, hypLangFilePath);
-//	System.out.println("Performance of the run = " + Performance.evaluate(goldLang, hypLangFilePath));
-    }
+		String hypLangFilePath = "run/test-lang-hyp2.txt";
+		config.recognizeFileLanguage(goldSent, hypLangFilePath);
+	}
 
 
-    @Rule
-    public TestName name = new TestName();
+	@Rule
+	public TestName name = new TestName();
 
 
-    @Before
-    public void printSeparator()
-    {
-	System.out.println("\n=========== " + name.getMethodName() + " =====================");
-    }
+	@Before
+	public void printSeparator()
+	{
+		System.out.println("\n=========== " + name.getMethodName() + " =====================");
+	}
 }

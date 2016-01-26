@@ -7,10 +7,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-/**
- * @author Bastien
- *
- */
 public class MyLaplaceLanguageModelTest {
 
     /**
@@ -20,11 +16,11 @@ public class MyLaplaceLanguageModelTest {
     public void testGetNgramProb() {
 	MyLaplaceLanguageModel lmtest = new MyLaplaceLanguageModel();
 	MyNgramCounts ngram = new MyNgramCounts();
-	ngram.readNgramCountsFile("lm/trigram-train-es.lm");
+	ngram.readNgramCountsFile("data/test/test-result-sentence_myngramcount");
 	lmtest.setNgramCounts(ngram);
-	String sentence = lmtest.getNgramProb("<s> la phrase").toString();
+	String sentence = lmtest.getNgramProb("<s> la phrase est la phrase").toString();
 	System.out.println(sentence);
-	assertEquals("0.0016", sentence);
+	assertEquals("15.133333333333333", sentence);
     }
 
 }

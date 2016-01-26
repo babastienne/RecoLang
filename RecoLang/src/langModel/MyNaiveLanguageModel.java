@@ -68,5 +68,9 @@ public abstract class MyNaiveLanguageModel implements LanguageModel {
 	return proba;
 
     }
+    
+    public Vocabulary getVocabulary() {
+	return this.vocabulary;
+    }
 
 }

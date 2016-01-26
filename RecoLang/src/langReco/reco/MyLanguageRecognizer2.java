@@ -1,80 +1,101 @@
-/**
- * MyLanguageRecognizer2 - Goal : detect the unknown languages
- *
- * @version1.0
- *
- * @author Bastien POTIRON
- * @date 08/01/2016
- * @notes
- * 	AmmÃ©liorer les commentaires, respecter les normes de qualitÃ© de code
- */
-
 package langReco.reco;
 
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-import langModel.LanguageModel;
 import langModel.MyLaplaceLanguageModel;
 import langModel.MyNgramCounts;
+import langModel.MyVocabulary;
 import langModel.NgramCounts;
 
-public class MyLanguageRecognizer2 extends LanguageRecognizer {
+public class MyLanguageRecognizer2 extends LanguageRecognizer{
 
-    NgramCounts unigramOfTheSentence = new MyNgramCounts();
-
-    /**
-     * Constructor of the MyLanguageRecognizer1 class.
-     *
-     * @param directoryToConfigurationFile configFile the file path of the configuration file containing the information
-     * 	on the language models (language, name and file path).
-     */
-    public MyLanguageRecognizer2(String directoryToConfigurationFile) {
-	super(); 															// on appel le constructeur de LanguageRecognizer.java
-	super.loadNgramCountPath4Lang(directoryToConfigurationFile);		// on dÃ©clare que la variable passÃ©e en paramÃ¨tre contient le chemin du fichier de configuration (liste des langues ...)
-    }
+    private HashMap<String,Map<String,MyLaplaceLanguageModel>> map;
+    
+    private MyNgramCounts unigramOfTheSentence;
 
     /**
-     * @see langReco.reco.LanguageRecognizer#recognizeSentenceLanguage(java.lang.String)
+     * Constructor of the class
+     * @param String configFile wich correspond to the directory of the configuration file
      */
-    @Override
-    public String recognizeSentenceLanguage(String sentence) {
-	LanguageModel laplaceModel;
-	Double probaLanguePhrase = 0.0;				// variable qui stockera la plus forte probabilitÃ© calculÃ©e
-	String language = "unk"; 					// variable qui sera retournÃ©e et contiendra le code pays correspondant Ã  la langue de la phrase transmise en paramÃ¨tre
+    public MyLanguageRecognizer2(String directoryToConfigurationFile){
+	super();
+	langNgramCountMap = new HashMap<String,Map<String,String>>();
+	loadNgramCountPath4Lang(directoryToConfigurationFile);
 
-	generateUnigramOfTheSentence(sentence);
+	map = new HashMap<String,Map<String,MyLaplaceLanguageModel>>();
+	NgramCounts ngramForEachLang;
+	MyLaplaceLanguageModel LanguageModelForLanguage;
+	HashMap<String,MyLaplaceLanguageModel> mapPassage;
 
-	Set<String> myLanguagesWords = getLanguages();
 
-	for (String codeLangue : myLanguagesWords) {				// on parcours la liste des langues pré-selectionnées
+	for(String language : this.getLanguages()) {
 
-	    laplaceModel = new MyLaplaceLanguageModel();
+	    for(String IdLanguage: this.getNgramCountNames(language)) {
 
-	    NgramCounts NgramOfCodeLangue = new MyNgramCounts();
-	    NgramOfCodeLangue.readNgramCountsFile ( this.getNgramCountPath( codeLangue,
-		    (String) super.langNgramCountMap.get (codeLangue).keySet ().toArray ()[0]));
+		ngramForEachLang = new MyNgramCounts();
+		LanguageModelForLanguage = new MyLaplaceLanguageModel();
+		mapPassage = new HashMap<String,MyLaplaceLanguageModel>();
 
-	    laplaceModel.setNgramCounts(NgramOfCodeLangue);
-	    double probaPhrase = laplaceModel.getSentenceProb(sentence);
-	    //	    System.out.println(codeLangue + " proba : " + probaPhrase);
-	    if (probaPhrase > probaLanguePhrase) { 	//On calcul la probabilitÃ© que la phrase soit dans la langue 'codeLangue'
-		probaLanguePhrase = probaPhrase; 	// Si la probabilitÃ© est suppÃ©rieur Ã  celle calculÃ©e avant alors on stocke cette nouvelle probabilitÃ©
-		language = codeLangue; 						// On stocke Ã©galement le code de la langue correspondante (exemple : fr)
+		ngramForEachLang.readNgramCountsFile(this.getNgramCountPath(language, IdLanguage));
+		LanguageModelForLanguage.setNgramCounts(ngramForEachLang);
+
+		mapPassage.put(IdLanguage, LanguageModelForLanguage);
+		map.put(language, mapPassage);
 	    }
 	}
-
-	return language; // on retourne le code de la langue detectÃ©e pour la phrase
-
     }
 
 
     /**
-     * This method generate a the unigrams of the sentence in param.
-     *
-     * @param sentence is the sentence to use for generate the unigram
+     * Method wich recognize the sentence language
+     * @param String sentence wich correspond to the sentence to determine
      */
-    public void generateUnigramOfTheSentence(String sentence) {
-	unigramOfTheSentence.scanTextString(sentence, 1); // on genere les unigrams de la phrase
+    public String recognizeSentenceLanguage(String sentence) {
+	int numberOfWordInTheSentence = getNumberOfWordInSentence(sentence);
+	lang = new ArrayList<String>(getLanguages());
+
+	double proba = 0.0;
+	String language="unk";
+//	MyLaplaceLanguageModel laplace = null;
+
+	for(String Eachlanguage : lang)
+	    for(MyLaplaceLanguageModel mllm : map.get(Eachlanguage).values())
+		if(mllm.getSentenceProb(sentence) > proba) {
+    		    if(verificationNgramInSentence(mllm) >= 0.6 * numberOfWordInTheSentence) {
+        		    proba = mllm.getSentenceProb(sentence);
+        		    language = Eachlanguage;
+//            		    laplace = mllm;
+
+		    }
+//    		    if(laplace == null)
+//    		    laplace = mllm;
+		}
+//	if(language.equals("unk"))
+//	    System.out.println(/*"Langue : " + language *//*+ " proba : " + proba + */" nbWord :" + numberOfWordInTheSentence + " equals : " + verificationNgramInSentence(laplace) + " tot : " + (double)verificationNgramInSentence(laplace)/(double)numberOfWordInTheSentence);
+	return language;
+    }
+
+    /**
+     * Getter of the number of words in the the sentence ('<s>' and '</s>' includes)
+     * @param sentence
+     * @return int the number of words in the sentence
+     */
+    public int getNumberOfWordInSentence(String sentence) {
+	unigramOfTheSentence = new MyNgramCounts();
+	unigramOfTheSentence.scanTextString(sentence, 1);
+
+	return unigramOfTheSentence.getTotalWordNumber();
+    }
+    
+    public int verificationNgramInSentence(MyLaplaceLanguageModel mllm) {
+	MyVocabulary vocab = (MyVocabulary) mllm.getVocabulary();
+	int numberOfWordInSentence = 0;
+	for(String word : vocab.getWords()) 
+	    for(String wordOfTheSentence : unigramOfTheSentence.getNgrams())
+		if(word.equals(wordOfTheSentence)) numberOfWordInSentence++;
+	return numberOfWordInSentence;
     }
 
 }

@@ -8,7 +8,7 @@ import langModel.MyLaplaceLanguageModel;
 import langModel.MyNgramCounts;
 import langModel.NgramCounts;
 
-public class MyLanguageRecognizer1 extends LanguageRecognizer{
+public class MyLanguageRecognizer4 extends LanguageRecognizer{
 	
 	private HashMap<String,Map<String,MyLaplaceLanguageModel>> map;
 	
@@ -16,7 +16,7 @@ public class MyLanguageRecognizer1 extends LanguageRecognizer{
 	 * Constructor of the class
 	 * @param String configFile wich correspond to the directory of the configuration file
 	 */
-	public MyLanguageRecognizer1(String directoryToConfigurationFile){
+	public MyLanguageRecognizer4(String directoryToConfigurationFile){
 		super();
 		langNgramCountMap = new HashMap<String,Map<String,String>>();
 		loadNgramCountPath4Lang(directoryToConfigurationFile);

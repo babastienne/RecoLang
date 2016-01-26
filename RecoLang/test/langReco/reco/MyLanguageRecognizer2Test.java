@@ -6,13 +6,9 @@
  *
  * @author Bastien POTIRON
  * @date 08/01/2016
- * @notes Results of the test
- *  For trigrams 16000
- * 		Time of the run for 2000 sentences :
- *  	performance  ~ 
- *  For bigrams 16000
- *  	Time of the run for 2000 sentences :
- *  	performances ~
+ * @notes Results of the test for gold-sent
+ * 		Time of the run : 31.752
+ *  	performance  ~ 0.99545
  */
 
 package langReco.reco;
@@ -22,30 +18,26 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
-import langReco.eval.Performance;
-
 public class MyLanguageRecognizer2Test {
 
-    @Test
-    public void testBaselineLanguageRecognizer() {
-	String goldSent = "data/gold/test-sent.txt";
-	String goldLang = "data/gold/test-lang.txt";
+	@Test
+	public void testBaselineLanguageRecognizer() {
+		String goldSent = "run/test-sent.txt";
 
-	MyLanguageRecognizer2 config = new MyLanguageRecognizer2("lm/fichConfig_trigram.txt");
+		MyLanguageRecognizer2 config = new MyLanguageRecognizer2("lm/fichConfig_unigram.txt");
 
-	String hypLangFilePath = "tmp/hyphoteseseLanguageRecognizer2WithTrigramAndUnknownLanguagesFor2000Sentences";
-	config.recognizeFileLanguage(goldSent, hypLangFilePath);
-	System.out.println("Performance of the run = " + Performance.evaluate(goldLang, hypLangFilePath));
-    }
+		String hypLangFilePath = "run/test-lang-hyp1.txt";
+		config.recognizeFileLanguage(goldSent, hypLangFilePath);
+	}
 
 
-    @Rule
-    public TestName name = new TestName();
+	@Rule
+	public TestName name = new TestName();
 
 
-    @Before
-    public void printSeparator()
-    {
-	System.out.println("\n=========== " + name.getMethodName() + " =====================");
-    }
+	@Before
+	public void printSeparator()
+	{
+		System.out.println("\n=========== " + name.getMethodName() + " =====================");
+	}
 }
