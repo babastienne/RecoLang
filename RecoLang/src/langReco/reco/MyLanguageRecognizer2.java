@@ -75,7 +75,7 @@ public class MyLanguageRecognizer2 extends LanguageRecognizer{
 	for(String Eachlanguage : lang)
 	    for(MyLaplaceLanguageModel mllm : map.get(Eachlanguage).values())
 		if(mllm.getSentenceProb(sentence) > proba)
-		    if(verificationNgramInSentence(mllm) >= 0.625 * numberOfWordInTheSentence || language.equals("lv")) {
+		    if(verificationNgramInSentence(mllm) >= 0.625 * numberOfWordInTheSentence || Eachlanguage.equals("lv")) {
 			proba = mllm.getSentenceProb(sentence);
 			language = Eachlanguage;
 
