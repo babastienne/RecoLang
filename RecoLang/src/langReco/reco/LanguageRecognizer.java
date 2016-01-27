@@ -203,8 +203,7 @@ public abstract class LanguageRecognizer {
 			langPredict = recognizeSentenceLanguage(sentence);
 			languagePrediction.append(langPredict);
 			languagePrediction.append("\n");
-//			if(i % 1000 == 0)
-			if(langPredict.equals("unk"))
+			if(i % 1000 == 0)
 				System.out.println("Phrases trait�es jusqu'à " + i);
 			i ++;
 		}

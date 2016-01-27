@@ -12,8 +12,12 @@ import langModel.NgramCounts;
 public class MyLanguageRecognizer2 extends LanguageRecognizer{
 
     private HashMap<String,Map<String,MyLaplaceLanguageModel>> map;
-    
+
     private MyNgramCounts unigramOfTheSentence;
+
+    //TEST
+    private HashMap<String, Integer> nbLang;
+    //END TEST
 
     /**
      * Constructor of the class
@@ -28,6 +32,15 @@ public class MyLanguageRecognizer2 extends LanguageRecognizer{
 	NgramCounts ngramForEachLang;
 	MyLaplaceLanguageModel LanguageModelForLanguage;
 	HashMap<String,MyLaplaceLanguageModel> mapPassage;
+
+
+	//TEST
+	nbLang = new HashMap<String, Integer>();
+	for(String lang : getLanguages()) {
+	    nbLang.put(lang, 0);
+	}
+	nbLang.put("unk", 0);
+	//END TEST
 
 
 	for(String language : this.getLanguages()) {
@@ -58,22 +71,19 @@ public class MyLanguageRecognizer2 extends LanguageRecognizer{
 
 	double proba = 0.0;
 	String language="unk";
-//	MyLaplaceLanguageModel laplace = null;
 
 	for(String Eachlanguage : lang)
 	    for(MyLaplaceLanguageModel mllm : map.get(Eachlanguage).values())
-		if(mllm.getSentenceProb(sentence) > proba) {
-    		    if(verificationNgramInSentence(mllm) >= 0.6 * numberOfWordInTheSentence) {
-        		    proba = mllm.getSentenceProb(sentence);
-        		    language = Eachlanguage;
-//            		    laplace = mllm;
+		if(mllm.getSentenceProb(sentence) > proba)
+		    if(verificationNgramInSentence(mllm) >= 0.625 * numberOfWordInTheSentence || language.equals("lv")) {
+			proba = mllm.getSentenceProb(sentence);
+			language = Eachlanguage;
 
 		    }
-//    		    if(laplace == null)
-//    		    laplace = mllm;
-		}
-//	if(language.equals("unk"))
-//	    System.out.println(/*"Langue : " + language *//*+ " proba : " + proba + */" nbWord :" + numberOfWordInTheSentence + " equals : " + verificationNgramInSentence(laplace) + " tot : " + (double)verificationNgramInSentence(laplace)/(double)numberOfWordInTheSentence);
+	//TEST
+	nbLang.put(language, nbLang.get(language)+1);
+	//END TEST
+
 	return language;
     }
 
@@ -88,7 +98,16 @@ public class MyLanguageRecognizer2 extends LanguageRecognizer{
 
 	return unigramOfTheSentence.getTotalWordNumber();
     }
-    
+
+    /**
+     * This method compare the vocabulary of a laplace model with the words of
+     * the unigram of the sentence. 
+     * Example : if the sentence is "the sentence is too short"
+     * 		 and the vocab of the laplace model contains the words 'the' 'long' 'sentence'
+     * 		 then the method return 3 because the voabulary contains 3 words of the sentence tested.
+     * @param mllm wich correspond to the laplace language model
+     * @return the number of word wich are present in the sentence and the vocabulary
+     */
     public int verificationNgramInSentence(MyLaplaceLanguageModel mllm) {
 	MyVocabulary vocab = (MyVocabulary) mllm.getVocabulary();
 	int numberOfWordInSentence = 0;
@@ -96,6 +115,16 @@ public class MyLanguageRecognizer2 extends LanguageRecognizer{
 	    for(String wordOfTheSentence : unigramOfTheSentence.getNgrams())
 		if(word.equals(wordOfTheSentence)) numberOfWordInSentence++;
 	return numberOfWordInSentence;
+    }
+
+    /*
+     * (non-javadoc) TEST METHOD (delete for final package)
+     * this method print the number of sentence recognize in each language
+     */
+    public void afficherLanguages() {
+	for(String lang : nbLang.keySet()) {
+	    System.out.println(lang + " : " + nbLang.get(lang));
+	}
     }
 
 }

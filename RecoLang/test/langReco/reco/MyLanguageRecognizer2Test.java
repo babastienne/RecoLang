@@ -28,6 +28,8 @@ public class MyLanguageRecognizer2Test {
 
 		String hypLangFilePath = "run/test-lang-hyp1.txt";
 		config.recognizeFileLanguage(goldSent, hypLangFilePath);
+		
+		config.afficherLanguages();
 	}
 
 
