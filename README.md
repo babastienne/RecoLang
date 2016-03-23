@@ -28,3 +28,5 @@ The languages used in the program are :
 - Estonian
 
 The program can be used for building any language model if you used it with a corpus containing sentences of the language.
+
+A part for recognize the unknown languages is also implemented.
