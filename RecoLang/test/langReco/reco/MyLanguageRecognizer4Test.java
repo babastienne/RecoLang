@@ -4,7 +4,7 @@
  * 
  * @version1.0
  *
- * @author Bastien POTIRON
+ * @author Babastienne
  * @date 08/01/2016
  * @notes Results of the test for gold-sent :
  * 		Time of the run  : 184.347
